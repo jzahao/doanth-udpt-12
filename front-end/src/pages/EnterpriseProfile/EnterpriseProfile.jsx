@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { FaUser } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input } from "antd";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 import WrapperContent from "../../components/WrapperContent/WrapperContent";
+import { getMyInfoEnterprise, updateEnterpriseInfo } from "../../services";
+import { userSelector } from "../../store/userslice";
 
 const EnterpriseProfile = () => {
   const [id, setId] = useState("");
@@ -12,6 +16,36 @@ const EnterpriseProfile = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
+
+  const user = useSelector(userSelector);
+
+  useEffect(() => {
+    getMyInfoEnterprise(user.token)
+      .then((res) => {
+        setId(res.result.id);
+        setEmail(res.result.email);
+        setName(res.result.name);
+        setAddress(res.result.address);
+        setPhone(res.result.phone);
+      })
+      .catch((err) => console.log(err));
+  }, [user]);
+
+  const handleOnClickSave = () => {
+    updateEnterpriseInfo(user.token, {
+      id,
+      name,
+      address,
+      phone,
+    })
+      .then((res) => {
+        if (res.code === 200) toast.success("Cập nhật thành công");
+      })
+      .catch((err) => {
+        toast.error("Không thể cập nhật");
+        console.log(err);
+      });
+  };
 
   return (
     <div className="py-6">
@@ -27,7 +61,7 @@ const EnterpriseProfile = () => {
             </Link>
 
             <Link
-              to=""
+              to="/enterprise-events"
               className="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-t-[border-[#ebecee]] flex items-center h-16 bg-white gap-x-2 px-4 hover:bg-[#e6e8f8]"
             >
               <MdOutlinePayment />
@@ -44,7 +78,6 @@ const EnterpriseProfile = () => {
               <Form layout="vertical" className="mt-6">
                 <Form.Item
                   label={<p className="text-base font-semibold">Tên</p>}
-                  name="name"
                 >
                   <Input
                     placeholder="Nhập tên"
@@ -56,14 +89,12 @@ const EnterpriseProfile = () => {
 
                 <Form.Item
                   label={<p className="text-base font-semibold">Email</p>}
-                  name="email"
                 >
                   <Input disabled className="h-10" value={email} />
                 </Form.Item>
 
                 <Form.Item
                   label={<p className="text-base font-semibold">Địa chỉ</p>}
-                  name="address"
                 >
                   <Input
                     placeholder="Nhập địa chỉ"
@@ -77,7 +108,6 @@ const EnterpriseProfile = () => {
                   label={
                     <p className="text-base font-semibold">Số điện thoại</p>
                   }
-                  name="phone"
                 >
                   <Input
                     placeholder="Nhập số điện thoại"
@@ -90,7 +120,10 @@ const EnterpriseProfile = () => {
             </div>
 
             <div className="px-3 border-t border-t-[#ddeaff] pt-4 flex gap-x-2 justify-center">
-              <Button className="bg-[#011bb6] hover:!bg-[#011bb6] h-10 rounded w-40 max-w-full">
+              <Button
+                className="bg-[#011bb6] hover:!bg-[#011bb6] h-10 rounded w-40 max-w-full"
+                onClick={handleOnClickSave}
+              >
                 <p className="uppercase text-white text-base font-semibold">
                   Lưu
                 </p>

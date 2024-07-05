@@ -44,7 +44,16 @@ public class EnterpriseService {
         if(id == null || id.isEmpty())
             throw new AppException(ErrorCode.MISSING_REQUIRED_PARAM);
         return enterpriseMapper.toEnterpriseResponse(
-                enterpriseRepository.findByEmail(id)
+                enterpriseRepository.findById(id)
+                        .orElseThrow(() -> new AppException(ErrorCode.ENTERPRISE_NOT_EXIST))
+        );
+    }
+
+    public EnterpriseResponse getEnterpriseByEmail(String email) {
+        if(email == null || email.isEmpty())
+            throw new AppException(ErrorCode.MISSING_REQUIRED_PARAM);
+        return enterpriseMapper.toEnterpriseResponse(
+                enterpriseRepository.findByEmail(email)
                         .orElseThrow(() -> new AppException(ErrorCode.ENTERPRISE_NOT_EXIST))
         );
     }

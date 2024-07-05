@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import WrapperContent from "../../components/WrapperContent/WrapperContent";
 import { Button, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "../../constants/route";
 import * as service from "../../services";
 import { useDispatch } from "react-redux";
@@ -13,22 +13,25 @@ const SignInPage = () => {
 
   const dispatch = useDispatch();
 
-  const handleOnClickLogin = async () => {
-    let res;
-    try {
-      res = await service.login(email, password);
-    } catch (err) {
-      res = err.response.data;
-    }
+  const navigate = useNavigate();
 
-    if (res.code && res.code === 200) {
-      dispatch(
-        userslice.actions.login({
-          token: res.result.token,
-          role: res.result.role,
-        })
-      );
-    }
+  const handleOnClickLogin = () => {
+    service
+      .login(email, password)
+      .then((res) => {
+        if (res.code === 200) {
+          dispatch(
+            userslice.actions.login({
+              token: res.result.token,
+              role: res.result.role,
+            })
+          );
+          navigate(-1);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

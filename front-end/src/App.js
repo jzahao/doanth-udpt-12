@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import AppRouter from "./components/approuter";
 import { useDispatch } from "react-redux";
 import userslice from "./store/userslice";
@@ -35,6 +38,18 @@ const App = () => {
     <div className="App">
       <div className="app-content">
         <AppRouter />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </div>
   );

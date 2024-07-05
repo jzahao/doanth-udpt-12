@@ -25,10 +25,17 @@ public class EnterpriseController {
                 .build();
     }
 
-    @GetMapping("/get-enterprise/{id}")
-    APIResponse<EnterpriseResponse> getEnterprise(@PathVariable("id") String id) {
+    @GetMapping("/get/{id}")
+    APIResponse<EnterpriseResponse> getEnterprise(@PathVariable String id) {
         return APIResponse.<EnterpriseResponse>builder()
                 .result(enterpriseService.getEnterprise(id))
+                .build();
+    }
+
+    @GetMapping("/get-by-email/{email}")
+    APIResponse<EnterpriseResponse> getEnterpriseByEmail(@PathVariable String email) {
+        return APIResponse.<EnterpriseResponse>builder()
+                .result(enterpriseService.getEnterpriseByEmail(email))
                 .build();
     }
 

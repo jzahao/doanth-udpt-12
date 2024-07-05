@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./protectedroute";
 
@@ -7,9 +8,12 @@ import HomePage from "../../pages/HomePage/HomePage";
 import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import SignInPage from "../../pages/SignInPage/SignInPage";
 import MyProfilePage from "../../pages/MyProfilePage/MyProfilePage";
+import MyBookings from "../../pages/MyProfilePage/MyBookings";
 import EnterpriseProfile from "../../pages/EnterpriseProfile/EnterpriseProfile";
+import EnterpriseMyEvents from "../../pages/EnterpriseProfile/MyEvents";
 import EventDetailPage from "../../pages/EventDetailPage/EventDetailPage";
-import { useSelector } from "react-redux";
+import CreateEvent from "../../pages/CreateEvent/CreateEvent";
+
 import { userSelector } from "../../store/userslice";
 
 function AppRouter() {
@@ -40,6 +44,7 @@ function AppRouter() {
             }
           >
             <Route path={ROUTE_PATH.MY_PROFILE} element={<MyProfilePage />} />
+            <Route path="my-bookings" element={<MyBookings />} />
           </Route>
           <Route
             element={
@@ -53,6 +58,8 @@ function AppRouter() {
               path={ROUTE_PATH.ENTERPRISE_PROFILE}
               element={<EnterpriseProfile />}
             />
+            <Route path="enterprise-events" element={<EnterpriseMyEvents />} />
+            <Route path="create-event" element={<CreateEvent />} />
           </Route>
           <Route
             element={

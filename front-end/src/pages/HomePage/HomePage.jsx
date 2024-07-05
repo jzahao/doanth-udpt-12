@@ -17,8 +17,6 @@ const HomePage = () => {
       });
   }, []);
 
-  console.log(events);
-
   return (
     <div className="py-4">
       <WrapperContent>

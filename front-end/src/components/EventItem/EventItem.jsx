@@ -1,14 +1,18 @@
 import React from "react";
-
 import { FaCalendarCheck, FaRegHeart } from "react-icons/fa";
 import { FiMapPin } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { userSelector } from "../../store/userslice";
 
 const EventItem = ({ data }) => {
   const navigate = useNavigate();
 
+  const user = useSelector(userSelector);
+
   const onNavigateToEventDetail = () => {
-    navigate(`event/${data.id}`);
+    navigate(`/event/${data.id}`);
   };
 
   return (
@@ -51,7 +55,7 @@ const EventItem = ({ data }) => {
 
         <div className="flex items-center justify-between mt-3">
           <p className="text-sm text-[#f1600d]">
-            <span className="font-semibold">{data.ticketPrice} $</span>
+            <span className="font-semibold">${data.ticketPrice}</span>
             {data.promotion ? (
               <span className="font-black ml-6 text-lg">
                 -{data.promotion * 100}%
@@ -61,9 +65,11 @@ const EventItem = ({ data }) => {
             )}
           </p>
 
-          <button className="bg-[#002876] h-[30px] rounded-[10px] text-white font-semibold text-xs px-6">
-            Mua vé
-          </button>
+          {(user.role === "CUSTOMER" || !user.role) && (
+            <button className="bg-[#002876] h-[30px] rounded-[10px] text-white font-semibold text-xs px-6">
+              Mua vé
+            </button>
+          )}
         </div>
       </div>
     </div>

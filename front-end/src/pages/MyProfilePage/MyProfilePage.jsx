@@ -63,20 +63,23 @@ const MyProfilePage = () => {
       });
   };
 
-  console.log(dob);
-  console.log(typeof dob);
-
   return (
     <div className="py-6">
       <WrapperContent>
         <div className="grid grid-cols-12 gap-x-3">
           <div className="col-span-4 border border-[#ebecee] rounded self-start">
-            <Link className="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-t-[border-[#ebecee]] flex items-center h-16 bg-white gap-x-2 px-4 hover:bg-[#e6e8f8]">
+            <Link
+              className="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-t-[border-[#ebecee]] flex items-center h-16 bg-white gap-x-2 px-4 hover:bg-[#e6e8f8]"
+              to=""
+            >
               <FaUser />
               <p>Cài đặt thông tin cá nhân</p>
             </Link>
 
-            <Link className="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-t-[border-[#ebecee]] flex items-center h-16 bg-white gap-x-2 px-4 hover:bg-[#e6e8f8]">
+            <Link
+              className="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-t-[border-[#ebecee]] flex items-center h-16 bg-white gap-x-2 px-4 hover:bg-[#e6e8f8]"
+              to="/my-bookings"
+            >
               <MdOutlinePayment />
               <p>Lịch sử thanh toán</p>
             </Link>

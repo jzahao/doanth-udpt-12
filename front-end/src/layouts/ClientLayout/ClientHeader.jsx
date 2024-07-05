@@ -24,11 +24,11 @@ const ClientHeader = () => {
               <img src="/images/logo.png" alt="Logo" className="block h-10" />
             </Link>
 
-            <Input
+            {/* <Input
               placeholder="Tên sự kiện, tên sản phẩm, tiêu đề blog..."
               className="h-10 w-1/2 max-w-full"
               suffix={<FaSearch />}
-            />
+            /> */}
 
             <div className="flex items-center gap-x-3">
               {!user.token ? (
@@ -71,13 +71,48 @@ const ClientHeader = () => {
 
       <div className="shadow-[rgba(0,0,0,0.05)_0px_1px_2px_0px]">
         <WrapperContent>
-          <div className="h-11 flex items-center justify-between">
-            <Link className="uppercase font-semibold">Sự kiện</Link>
-            <Link className="uppercase font-semibold">Dịch vụ</Link>
-            <Link className="uppercase font-semibold">Bảo hiểm</Link>
-            <Link className="uppercase font-semibold">Blog</Link>
-            <Link className="uppercase font-semibold">Hỗ trợ</Link>
-            <Link className="uppercase font-semibold">Giải pháp</Link>
+          <div className="h-11 flex items-center justify-center">
+            <Link className="uppercase font-semibold pl-10 pr-10" to="/">
+              Trang chủ
+            </Link>
+            {user.role === "CUSTOMER" && (
+              <>
+                <Link
+                  className="uppercase font-semibold pl-10 pr-10"
+                  to="/profile"
+                >
+                  Thông tin cá nhân
+                </Link>
+                <Link
+                  className="uppercase font-semibold pl-10 pr-10"
+                  to="/my-bookings"
+                >
+                  Lịch sử thanh toán
+                </Link>
+              </>
+            )}
+            {user.role === "ENTERPRISE" && (
+              <>
+                <Link
+                  className="uppercase font-semibold pl-10 pr-10"
+                  to="/create-event"
+                >
+                  Tạo sự kiện
+                </Link>
+                <Link
+                  className="uppercase font-semibold pl-10 pr-10"
+                  to="/enterprise-profile"
+                >
+                  Thông tin cá nhân
+                </Link>
+                <Link
+                  className="uppercase font-semibold pl-10 pr-10"
+                  to="/enterprise-events"
+                >
+                  Sự kiện của tôi
+                </Link>
+              </>
+            )}
           </div>
         </WrapperContent>
       </div>
